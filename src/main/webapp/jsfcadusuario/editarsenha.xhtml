@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/modelo.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="topo"><p:messages id="msgs" showDetail="false" /></ui:define>
+    <ui:define name="corpo">
+        <h:form id="formulario">
+            <p:panelGrid style="margin-top:20px">
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="6">Editando Senha Usuário</p:column>      
+                    </p:row>
+                </f:facet>
+                <p:row rendered="false">
+                    <p:column><h:outputText value="Id:"/></p:column>
+                    <p:column colspan="5">
+                        <p:inputText id="id" size="50"  value="#{jSFUsuarioControlador.entidade.id}" readonly="true" />
+
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="false">
+                    <p:column><h:outputText value="Nome:*"/></p:column>
+                    <p:column colspan="5">
+                        <p:inputText id="nome" size="50"  value="#{jSFUsuarioControlador.entidade.nome}" required="true" requiredMessage="Nome é obrigatório"/>
+                        <p:message for="nome" showDetail="true" />
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="false">
+                    <p:column><h:outputText value="E-mail:*"/></p:column>
+                    <p:column colspan="5">
+                        <p:inputText id="email" size="50"  value="#{jSFUsuarioControlador.entidade.email}" required="true" requiredMessage="E-mail é obrigatório"/>
+                        <p:message for="email" showDetail="true" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column><h:outputText value="Senha atual*"/></p:column>
+                    <p:column colspan="5">                             
+                        <p:password id="senhaAnteriorInformar" size="50"  value="#{jSFUsuarioControlador.senhaAnteriorInformar}" validator="#{jSFUsuarioControlador.validarSenhaAtual()}" validatorMessage="Senha informada não confere com a senha atual" required="true" feedback="true" requiredMessage="Senha atual é obrigatório" promptLabel="Entre com a senha atual"  weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Ótima" redisplay="true" />
+                        <p:message for="senhaAnteriorInformar" showDetail="true" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column><h:outputText value="Nova senha:*"/></p:column>
+                    <p:column colspan="5">                             
+                        <p:password id="senha" size="50"  value="#{jSFUsuarioControlador.entidade.senha}" required="true"  feedback="true" requiredMessage="Senha é obrigatório" promptLabel="Entre com a senha"  weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Ótima" />
+                        <p:message for="senha" showDetail="true" />
+                    </p:column>
+                </p:row>
+
+                <f:facet name="footer">
+                    <p:row>
+                        <p:column colspan="6" style="text-align: right">
+                            <p:commandButton actionListener="#{jSFUsuarioControlador.salvarAlteracaoSenha()}" action="lista" update="msgs" ajax="false" value="Salvar"/> 
+                            <p:spacer width="20"/>
+                            <p:commandButton actionListener="#{jSFUsuarioControlador.cancelar()}" action="lista" update="msgs" ajax="false" value="Cancelar" immediate="true"/> 
+                        </p:column>
+                    </p:row>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

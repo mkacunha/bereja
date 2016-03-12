@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/modelo.xhtml">
+    <ui:define name="topo"></ui:define>
+    <ui:define name="corpo">
+        <h:form id="formulario">
+            <p:panel>
+                <h:outputText value="Lista de Usuários" />
+                <p:messages id="msgs" showDetail="true" />
+                <br/>
+                <p:panel>
+                    <h:outputText value="Filtro"/>
+                    <p:inputText value="#{jSFUsuarioControlador.filtro}"/>
+                    <p:commandButton actionListener="#{jSFUsuarioControlador.filtrar()}" value="Filtrar" ajax="false" />
+                    <p:commandButton actionListener="#{jSFUsuarioControlador.novo()}" value="Novo" ajax="false" action="edita" />
+                    <br/>
+                    Filtrando por Nome
+                </p:panel>
+                <p:dataTable value="#{jSFUsuarioControlador.lista}" emptyMessage="Nenhum registro corresponde ao filtro." var="obj">
+                    <p:column headerText="Nome" sortBy="#{obj.nome}" >
+                        <h:outputText value="#{obj.nome}" />
+                    </p:column>
+                    <p:column headerText="E-mail" sortBy="#{obj.email}" >
+                        <h:outputText value="#{obj.email}" />
+                    </p:column>
+                    <p:column headerText="Editar senha" style="width: 10%; text-align: center;">                                               
+                        <p:commandButton id="editarSenhaLink" action="editarsenha" actionListener="#{jSFUsuarioControlador.editarSenhaUsuario(obj)}" icon="ui-icon-locked" ajax="false" /> 
+                    </p:column>
+                    <p:column headerText="Editar" style="width: 10%; text-align: center;">                                               
+                        <p:commandButton id="editarLink" action="edita" actionListener="#{jSFUsuarioControlador.setEntidade(obj)}" icon="ui-icon-search" ajax="false" /> 
+                    </p:column>
+                    <p:column style="text-align: center"  headerText="Excluir">
+                        <p:commandButton icon="ui-icon-trash" update="@form" actionListener="#{jSFUsuarioControlador.excluir(obj)}" 
+                                         onclick="if (!confirm('Deseja excluir este registro?'))
+                                                     return false;"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -58,8 +58,8 @@ public class FiltroEntityManager implements Filter {
         EntityManager em = Persistencia.getInstancia().getEntityManager();
         Persistencia.getInstancia().ip.set(request.getRemoteAddr().toString());
         String login;
-        login = ((HttpServletRequest) request).getUserPrincipal().getName();
-        Persistencia.getInstancia().login.set(login);
+     //   login = ((HttpServletRequest) request).getUserPrincipal().getName();
+     //   Persistencia.getInstancia().login.set(login);
 
         //TODO descobrir a cervejaria do Usuario 
         try {
