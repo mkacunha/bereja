@@ -9,10 +9,8 @@ import br.com.munif.bereja.entidades.Usuario;
 import br.com.munif.bereja.negocio.UsuarioService;
 import br.com.munif.util.FacesUtil;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -28,8 +26,7 @@ public class JSFUsuarioControlador {
     private List<Usuario> lista;
     private String filtro;
     private Boolean novo;
-    private String senhaAnteriorInformar;
-    private String senhaAnteriorSalva;
+    private String senhaAtual;
 
     public JSFUsuarioControlador() {
         this.service = new UsuarioService();
@@ -86,7 +83,7 @@ public class JSFUsuarioControlador {
 
     public void cancelar() {
         entidade = null;
-        FacesUtil.addMessageWarn("Aviso", "A operação foi cancelada");
+        FacesUtil.addMessageWarn("Aviso", "A operação foi cancelada.");
     }
 
     public void filtrar() {
@@ -103,27 +100,29 @@ public class JSFUsuarioControlador {
         return novo;
     }
 
-    public void salvarAlteracaoSenha() {
-        salvar();
-    }
-
-    public void setSenhaAnteriorInformar(String senhaAnteriorInformar) {
-        this.senhaAnteriorInformar = senhaAnteriorInformar;
-    }
-
-    public String getSenhaAnteriorInformar() {
-        return senhaAnteriorInformar;
-    }
-
-    public void editarSenhaUsuario(Usuario entidade) {
-        this.senhaAnteriorSalva = entidade.getSenha();
-        setEntidade(entidade);
-    }
-
-    public void validarSenhaAtual() {
-        System.out.println(senhaAnteriorSalva + " - " + senhaAnteriorInformar);
-        if (!senhaAnteriorSalva.equals(senhaAnteriorInformar)) {
-            throw new ValidatorException(new FacesMessage("Senha atual informada não confere com a senha atual !"));
+    public String salvarAlteracaoSenha() {
+        Usuario usu = service.recuperar(entidade.getId());
+        if (!usu.getSenha().equals(senhaAtual)) {
+            FacesUtil.addMessageError("Senha atual informada não confere", "");
+        } else if (usu.getSenha().equals(entidade.getSenha())) {
+            FacesUtil.addMessageError("Nova senha deve ser diferente da senha atual", "");
+        } else {
+            salvar();
+            return "lista";
         }
+        return "";
+    }
+
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
+    }
+
+    public String getSenhaAtual() {
+        return senhaAtual;
+    }
+
+    public void editarSenha(Usuario usuario) {
+        this.senhaAtual = "";
+        setEntidade(usuario);
     }
 }

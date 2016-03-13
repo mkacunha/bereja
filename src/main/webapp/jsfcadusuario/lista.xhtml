@@ -28,7 +28,7 @@
                         <h:outputText value="#{obj.email}" />
                     </p:column>
                     <p:column headerText="Editar senha" style="width: 10%; text-align: center;">                                               
-                        <p:commandButton id="editarSenhaLink" action="editarsenha" actionListener="#{jSFUsuarioControlador.editarSenhaUsuario(obj)}" icon="ui-icon-locked" ajax="false" /> 
+                        <p:commandButton id="editarSenhaLink" action="editarsenha" actionListener="#{jSFUsuarioControlador.editarSenha(obj)}" icon="ui-icon-locked" ajax="false" /> 
                     </p:column>
                     <p:column headerText="Editar" style="width: 10%; text-align: center;">                                               
                         <p:commandButton id="editarLink" action="edita" actionListener="#{jSFUsuarioControlador.setEntidade(obj)}" icon="ui-icon-search" ajax="false" /> 
